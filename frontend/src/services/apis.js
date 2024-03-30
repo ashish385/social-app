@@ -1,6 +1,6 @@
-// const SOCIAL_APP_API = "https://social-app-i0jz.onrender.com/";
-const BASE_URL = "http://localhost:8800/api";
-// const BASE_URL = SOCIAL_APP_API +"api";  // for production use
+const SOCIAL_APP_API = "https://social-app-i0jz.onrender.com/";
+// const BASE_URL = "http://localhost:8800/api";
+const BASE_URL = SOCIAL_APP_API +"api";  // for production use
 
 // AUTH ENDPOINTS
 export const endpoints = {

@@ -3,8 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { logout } from "../../services/operations/authAPI";
 
-const profile =
-  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRXdkNKzFIPcRF75IkVqQaZqaiH3A1xiPyctyhqJmFHcw&s";
+const profile = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRXdkNKzFIPcRF75IkVqQaZqaiH3A1xiPyctyhqJmFHcw&s";
 
 const Navbar = () => {
   const [openDrawer, setOpenDrawer] = useState(false);

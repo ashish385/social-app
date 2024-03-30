@@ -22,6 +22,8 @@ const EditPost = ({ post, setEditingPost, setOpenDelete }) => {
   // const inputfileRef = useRef(null);
   function handleClose() {
     setEditingPost(false);
+    setOpenDelete(false);
+    setEditingPost(false);
   }
 
   const handleTitleChange = (e) => {
