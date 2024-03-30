@@ -1,6 +1,5 @@
 const { compareString, createJWT, hashString } = require("../utils/index");
 const Users = require("../models/userModel");
-const { use } = require("../routes/authRoutes");
 
 exports.register = async (req, res, next) => {
   const { username, email, password } = req.body;

@@ -109,30 +109,30 @@ export function forgotPassword(
   };
 }
 
-export function resetPassword(resetdata, setErrMsg, setIsSubmitting, navigate) {
+export function resetPassword(resetdata, setIsSubmitting, navigate) {
   return async (dispatch) => {
     // dispatch(setIsSubmitting(true));
     const toastId = toast.loading("Loading...");
     setIsSubmitting(true);
     try {
       const response = await apiConnector("POST", RESETPASSWORD_API, resetdata);
-      console.log("SIGNUP API RESPONSE............", response);
+      console.log("RESETPASSWORD_API API RESPONSE............", response);
 
       if (!response.data.success) {
         // setErrMsg(response.data);
-        throw new Error(response.data.message);
+        toast.error("Error in password update.");
       }
       navigate("/login");
       toast.dismiss(toastId);
       toast.success("Password upadate Successful");
     } catch (error) {
-      console.log("SIGNUP API ERROR............", error.response.data);
-      toast.error(error.response.data.message || "Something went wrong!");
+      console.log("RESETPASSWORD_API API ERROR............", error);
+      toast.error("Something went wrong!");
     }
     // dispatch(setIsSubmitting(false));
     setTimeout(() => {
       setIsSubmitting(false);
       toast.dismiss(toastId);
-    }, 5000)
+    }, 5000);
   };
 }
