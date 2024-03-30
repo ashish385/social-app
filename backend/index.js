@@ -56,19 +56,12 @@ app.use(
 app.use("/api/auth", authRoute); // For authentication routes
 app.use("/api/post", postRoute); // For post routes
 
-// // def routes
-app.get("/", (req, res) => {
-  return res.json({
-    success: true,
-    message: "Your server is up and running....",
-  });
-});
+
 
 
 // ---------------------------Deployment-------------------------------
 
 const __dirname1 = path.resolve();
-
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname1, "/frontend/build")));
 
