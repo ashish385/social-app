@@ -23,10 +23,11 @@ const CreatePoast = () => {
 
   const handleTitleChange = (e) => {
     setDescription(e.target.value);
+    console.log(e.target.value);
   };
 
   const handleImageDrop = (e) => {
-    // setImage(acceptedFiles[0]);
+    console.log("e.target.files[0]", e.target.files[0]);
     const file = e.target.files[0];
     if (file) {
       setImage(file);
@@ -50,20 +51,22 @@ const CreatePoast = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setPosting(true);
-    if (!description) {
-      toast.error("Please enter a description for your post.");
+    if (!description || !image) {
+      toast.error("Please enter a description and image for your post.");
       return;
     }
 
-    const postData = new FormData();
-    postData.append("description", description);
-    if (image) postData.append("image", image);
+    const postData = {
+      description: description,
+      image:image
+    }
     // if (video) postData.append("video", video);
 
     console.log("postdata", postData);
 
     // console.log(postData, user.token);
     dispatch(createPost(postData, user.token));
+    setImage("")
     setPosting(false);
     setDescription("");
     setImage("");
@@ -123,24 +126,18 @@ const CreatePoast = () => {
                 className="dropzone flex items-center gap-1 text-base text-ascent-2 hover:text-ascent-1 text-blue-500  cursor-pointer"
               >
                 <input {...getInputProps()} />
-                <div id>
-                  <BiSolidVideo />
-                  <span>Video</span>
-                </div>
+                <BiSolidVideo />
+                <span>Video</span>
               </div>
             )}
           </Dropzone>
 
           <div>
-            {posting ? (
-              <Loading />
-            ) : (
-              <CustomButton
-                type="submit"
-                title="Post"
-                containerStyles="bg-[#0444a4] text-white py-1 px-6 rounded-full font-semibold text-sm"
-              />
-            )}
+            <CustomButton
+              type="submit"
+              title="Post"
+              containerStyles="bg-[#0444a4] text-white py-1 px-6 rounded-full font-semibold text-sm"
+            />
           </div>
         </div>
       </form>

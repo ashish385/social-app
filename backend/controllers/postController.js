@@ -7,7 +7,7 @@ const { fileUploadToCloudinary } = require("../utils/fileUploader");
 exports.createPost = async (req, res) => {
   const { userId } = req.body.user;
   const { description } = req.body;
-  const image = req.files.image;
+  const { image } = req.files;
 
   try {
     if (!description) {
@@ -18,8 +18,6 @@ exports.createPost = async (req, res) => {
     }
     const user = await Users.findById(userId);
 
-   
-    
     const getImageUrl = await fileUploadToCloudinary(image, process.env.FOLDER_NAME);
     // const getVideoUrl = await fileUploadToCloudinary(video, process.env.FOLDER_NAME);
     // console.log("video-url", uploadDetails.secure_url);
