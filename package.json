@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-   "start": "node backend/index.js",
+    "start": "node backend/index.js",
     "dev": "nodemon backend/index.js",
     "build": "npm install --legacy-peer-deps && npm install --legacy-peer-deps --prefix frontend && npm run build --prefix frontend"
   },
@@ -25,5 +25,8 @@
     "mongoose": "^8.2.3",
     "morgan": "^1.10.0",
     "nodemon": "^3.1.0"
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11"
   }
 }

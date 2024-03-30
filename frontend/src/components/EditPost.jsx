@@ -8,27 +8,46 @@ import { NoProfile } from "../assets/index";
 import toast from "react-hot-toast";
 import { editPost } from "../services/operations/postAPI";
 
-const EditPost = ({ post, setEditingPost }) => {
+const EditPost = ({ post, setEditingPost, setOpenDelete }) => {
   const { user } = useSelector((state) => state.user);
   const [posting, setPosting] = useState(false);
   const [description, setDescription] = useState(post.description || "");
-  const [image, setImage] = useState(post.image || "");
+  const [image, setImage] = useState(post?.image || "");
+  const [previewSource, setPreviewSource] = useState(post?.image || "");
+
+  // console.log("edit post",post);
   const [video, setVideo] = useState(null);
   const dispatch = useDispatch();
+
+  // const inputfileRef = useRef(null);
   function handleClose() {
-      setEditingPost(false);
+    setEditingPost(false);
   }
 
   const handleTitleChange = (e) => {
     setDescription(e.target.value);
   };
 
-  const handleImageDrop = (acceptedFiles) => {
-    setImage(acceptedFiles[0]);
+  const handleImageDrop = (e) => {
+    const file = e.target.files[0];
+    console.log("file", file);
+    if (file) {
+      setImage(file);
+      previewFile(file);
+    }
+  };
+
+  const previewFile = (file) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      setPreviewSource(reader.result);
+    };
   };
 
   const handleVideoDrop = (acceptedFiles) => {
     setVideo(acceptedFiles[0]);
+    console.log(video);
   };
 
   const handleSubmit = async (e) => {
@@ -38,14 +57,17 @@ const EditPost = ({ post, setEditingPost }) => {
       toast.error("Please enter a description for your post.");
       return;
     }
-    const postData = {
-      description,
-      image: video ? image.path : "",
-      video: video ? video.path : "",
-    };
+    const postData = new FormData();
+    postData.append("description", description);
+    if (image) postData.append("image", image);
+    // if (video) postData.append("video", video);
+
+    console.log("postdata", postData);
 
     dispatch(editPost(post._id, postData, user.token));
     setPosting(false);
+    setOpenDelete(false);
+    setEditingPost(false);
   };
 
   return (
@@ -80,20 +102,31 @@ const EditPost = ({ post, setEditingPost }) => {
                 />
               </div>
 
-              <div className="flex items-center justify-between py-4 ">
-                <Dropzone onDrop={handleImageDrop} accept="image/*">
-                  {({ getRootProps, getInputProps }) => (
-                    <div
-                      {...getRootProps()}
-                      className="dropzone flex items-center gap-1 text-base text-ascent-2 hover:text-ascent-1 text-blue-500  cursor-pointer"
-                    >
-                      <input {...getInputProps()} />
-                      <BiImages />
-                      <span>Image</span>
-                    </div>
-                  )}
-                </Dropzone>
+              {previewSource && (
+                <div>
+                  <img
+                    src={previewSource}
+                    alt={`profile-${user?.username}`}
+                    className=" w-full mt-2 rounded-lg "
+                  />
+                </div>
+              )}
 
+              <div className="flex items-center justify-between py-4 ">
+                <label
+                  htmlFor="image"
+                  className="dropzone flex items-center gap-1 text-base text-ascent-2 hover:text-ascent-1 text-blue-500  cursor-pointer"
+                >
+                  <input
+                    id="image"
+                    type="file"
+                    onChange={handleImageDrop}
+                    hidden
+                    accept="image/png, image/gif, image/jpeg"
+                  />
+                  <BiImages />
+                  <span>Image</span>
+                </label>
                 {/*  for video */}
                 <Dropzone onDrop={handleVideoDrop} accept="video/*">
                   {({ getRootProps, getInputProps }) => (

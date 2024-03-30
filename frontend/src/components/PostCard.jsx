@@ -87,7 +87,11 @@ const PostCard = ({ post, user }) => {
                     Edit Post
                   </div>
                   {editingPost && (
-                    <EditPost post={post} setEditingPost={setEditingPost} />
+                    <EditPost
+                      post={post}
+                      setEditingPost={setEditingPost}
+                      setOpenDelete={setOpenDelete}
+                    />
                   )}
                 </div>
               )}

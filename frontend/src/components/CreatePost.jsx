@@ -65,7 +65,6 @@ const CreatePoast = () => {
     // console.log(postData, user.token);
     dispatch(createPost(postData, user.token));
     setPosting(false);
-    fileInputRef(null);
     setDescription("");
     setImage("");
   };
