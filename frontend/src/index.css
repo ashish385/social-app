@@ -1,0 +1,20 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  scrollbar-width: thin;
+}
+
+body {
+  scrollbar-width: thin;
+}
+
+.feed-scrollbar {
+  scrollbar-width: none;
+  scroll-behavior: smooth;
+  scrollbar-color: white;
+}
